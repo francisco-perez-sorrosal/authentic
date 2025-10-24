@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     debug: bool = Field(default=False, description="Debug mode")
     log_level: str = Field(default="INFO", description="Log level")
     host: str = Field(default="0.0.0.0", description="Host to run the server on")
-    port: int = Field(default=8000, description="Port to run the server on")
+    port: int = Field(default=9000, description="Port to run the server on")
 
     @model_validator(mode="after")
     def override_log_level(self) -> "Settings":
