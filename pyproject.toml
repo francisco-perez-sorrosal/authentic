@@ -1,0 +1,61 @@
+[project]
+name = "authentic"
+version = "0.0.1"
+description = "A simple authentication server"
+requires-python = ">=3.11"
+dependencies = [
+    "loguru",
+    "typer",
+    "rich",
+    "python-dotenv",
+    "pydantic", 
+    "pydantic-settings>=2.11.0,<3", "uvicorn>=0.38.0,<0.39", "starlette>=0.48.0,<0.49", "mcp[cli]>=1.18.0,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+    "python-semantic-release",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["osx-arm64"]
+
+[tool.pixi.pypi-dependencies]
+authentic = { path = ".", editable = true }
+
+[tool.pixi.environments]
+default = { features = ["dev"] }
+
+[tool.pixi.tasks]
+start = "python -m authentic"
+test = "pytest"
+lint = "ruff check src/"
+format = "ruff format src/"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "PIE"]
+ignore = ["E501", "B008", "B904"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+pythonpath = ["src"]
