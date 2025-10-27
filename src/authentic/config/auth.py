@@ -1,11 +1,9 @@
-from pydantic import AnyHttpUrl, Field, computed_field
+from pydantic import AnyHttpUrl, Field, computed_field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class SimpleAuthSettings(BaseSettings):
     """Simple OAuth settings for basic authentication purposes."""
-
-    model_config = SettingsConfigDict(env_prefix="MCP_")
 
     # Basic authentication credentials
     username: str = "fps"
@@ -20,10 +18,16 @@ class AuthServerSettings(BaseSettings):
 
     model_config = SettingsConfigDict(env_file=".auth.env")
 
+    name: str = Field(default="Authentic", description="A simple authentication server")
+
+    # Logging settings
+    debug: bool = Field(default=False, description="Debug mode")
+    log_level: str = Field(default="INFO", description="Log level")
+
     # Server settings
-    host: str = "localhost"
-    port: int = 9000
-    auth_callback_path: str = Field(default="/login/callback")
+    host: str = Field(default="0.0.0.0", description="Host to run the server on")
+    port: int = Field(default=9000, description="Port to run the server on")
+    auth_path: str = Field(default="/login")
 
     @computed_field
     @property
@@ -33,9 +37,16 @@ class AuthServerSettings(BaseSettings):
 
     @computed_field
     @property
-    def auth_callback_url(self) -> AnyHttpUrl:
-        """Computed callback URL based on server URL and callback path."""
+    def auth_url(self) -> AnyHttpUrl:
+        """Computed auth URL based on server URL and auth path."""
         # Ensure proper URL joining without double slashes
         base_url = str(self.server_url).rstrip("/")
-        callback_path = self.auth_callback_path.lstrip("/")
-        return AnyHttpUrl(f"{base_url}/{callback_path}")
+        auth_path = self.auth_path.lstrip("/")
+        return AnyHttpUrl(f"{base_url}/{auth_path}")
+
+    @model_validator(mode="after")
+    def override_log_level(self) -> "AuthServerSettings":
+        """Override log_level to DEBUG if debug flag is True."""
+        if self.debug:
+            self.log_level = "DEBUG"
+        return self

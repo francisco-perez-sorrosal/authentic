@@ -18,8 +18,10 @@ cp .env.example .env
 
 Run the application:
 ```bash
-pixi run start
+pixi run start --debug
 ```
+
+The required env. variables will be read from the .auth.env file.
 
 Run tests:
 ```bash

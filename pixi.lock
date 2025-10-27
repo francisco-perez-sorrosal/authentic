@@ -107,7 +107,7 @@ packages:
 - pypi: .
   name: authentic
   version: 0.0.1
-  sha256: 279a8a4c7ced5dd7e86579f49b18497e144716672a7f2fedcc3bf31b046162ee
+  sha256: 7d9b3eeb621c19ea543842d873ff0c2f8ca6239960260ef3d37b74cd34658b70
   requires_dist:
   - loguru
   - typer
