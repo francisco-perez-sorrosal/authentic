@@ -15,10 +15,10 @@ from authentic.logger import logger
 
 def build_oauth2_server(auth_settings: SimpleAuthSettings, auth_server_settings: AuthServerSettings) -> Starlette:
     
-    oauth_provider = SimpleOAuthProvider(auth_settings, str(auth_server_settings.auth_url), str(auth_server_settings.server_url))
+    oauth_provider = SimpleOAuthProvider(auth_settings, str(auth_server_settings.auth_url), str(auth_server_settings.auth_server_base_url))
     
     mcp_auth_settings = AuthSettings(
-        issuer_url=auth_server_settings.server_url,
+        issuer_url=auth_server_settings.auth_server_base_url,
         client_registration_options=ClientRegistrationOptions(
             enabled=True,
             valid_scopes=[auth_settings.mcp_scope],
@@ -111,7 +111,5 @@ def build_oauth2_server(auth_settings: SimpleAuthSettings, auth_server_settings:
     logger.info("--------------------------------")
     logger.info(f"Routes: \n{'\n'.join([f'{route.path} -> {route.endpoint}' for route in routes])}")
     logger.info("--------------------------------")
-
-
 
     return Starlette(routes=routes)

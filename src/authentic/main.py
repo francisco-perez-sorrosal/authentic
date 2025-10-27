@@ -15,6 +15,7 @@ from uvicorn import Config, Server
 
 # https://dev.to/composiodev/mcp-oauth-21-a-complete-guide-3g91
 # https://github.com/22f2000147/oauth-demo/blob/main/simple-auth/mcp_simple_auth/auth_server.py
+# https://github.com/rb58853/mcp-oauth/tree/main
 
 console = Console()
 app = typer.Typer()

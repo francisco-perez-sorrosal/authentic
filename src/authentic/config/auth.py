@@ -27,20 +27,27 @@ class AuthServerSettings(BaseSettings):
     # Server settings
     host: str = Field(default="0.0.0.0", description="Host to run the server on")
     port: int = Field(default=9000, description="Port to run the server on")
+
+    # Auth server settings
+    auth_host: str = Field(default="0.0.0.0", description="Host to run the auth server on")
+    auth_port: int = Field(default=9000, description="Port to run the auth server on")
     auth_path: str = Field(default="/login")
 
     @computed_field
     @property
-    def server_url(self) -> AnyHttpUrl:
+    def auth_server_base_url(self) -> AnyHttpUrl:
         """Computed server URL based on host and port."""
-        return AnyHttpUrl(f"http://{self.host}:{self.port}")
+        if self.auth_host == "localhost":
+            return AnyHttpUrl(f"http://{self.auth_host}:{self.auth_port}")
+        else:
+            return AnyHttpUrl(f"https://{self.auth_host}:{self.auth_port}")
 
     @computed_field
     @property
     def auth_url(self) -> AnyHttpUrl:
         """Computed auth URL based on server URL and auth path."""
         # Ensure proper URL joining without double slashes
-        base_url = str(self.server_url).rstrip("/")
+        base_url = str(self.auth_server_base_url).rstrip("/")
         auth_path = self.auth_path.lstrip("/")
         return AnyHttpUrl(f"{base_url}/{auth_path}")
 
