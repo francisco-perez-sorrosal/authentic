@@ -60,6 +60,8 @@ class SimpleOAuthProvider(OAuthAuthorizationServerProvider[AuthorizationCode, Re
         """Generate an authorization URL for simple login flow."""
         state = params.state or secrets.token_hex(16)
 
+        logger.info(f"Authorizing client: {client.client_id} with params: {params}")
+
         # Store state mapping for callback
         self.state_mapping[state] = {
             "redirect_uri": str(params.redirect_uri),
