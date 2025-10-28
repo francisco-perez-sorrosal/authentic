@@ -49,7 +49,7 @@ class SimpleOAuthProvider(OAuthAuthorizationServerProvider[AuthorizationCode, Re
 
     async def get_client(self, client_id: str) -> OAuthClientInformationFull | None:
         """Get OAuth client information."""
-        logger.info(f"Getting client information for client_id: {client_id}")
+        logger.info(f"Getting client information for client_id: {client_id}: {self.clients.get(client_id)}")
         return self.clients.get(client_id)
 
     async def register_client(self, client_info: OAuthClientInformationFull):
