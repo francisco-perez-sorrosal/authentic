@@ -48,7 +48,7 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/0c/29/0348de65b8cc732daa3e33e67806420b2ae89bdce2b04af740289c5c6c8c/loguru-0.7.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/94/54/e7d793b573f298e1c9013b8c4dade17d481164aa517d1d7148619c2cedbf/markdown_it_py-4.0.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b5/64/7660f8a4a8e53c924d0fa05dc3a55c9cee10bbd82b11c5afb27d44b096ce/markupsafe-3.0.3-cp314-cp314-macosx_11_0_arm64.whl
-      - pypi: https://files.pythonhosted.org/packages/1b/44/f5970e3e899803823826283a70b6003afd46f28e082544407e24575eccd3/mcp-1.18.0-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/ce/a3/3e71a875a08b6a830b88c40bc413bff01f1650f1efe8a054b5e90a9d4f56/mcp-1.19.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b3/38/89ba8ad64ae25be8de66a6d463314cf1eb366222074cfda9ee839c56a4b4/mdurl-0.1.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/54/20/4d324d65cc6d9205fabedc306948156824eb9f0ee1633355a8f7ec5c66bf/pluggy-1.6.0-py3-none-any.whl
@@ -107,7 +107,7 @@ packages:
 - pypi: .
   name: authentic
   version: 0.0.1
-  sha256: 7d9b3eeb621c19ea543842d873ff0c2f8ca6239960260ef3d37b74cd34658b70
+  sha256: 2b67d13e9fd09d4db26200616f578483527f734441ae6f5ea980c2aa991fbc53
   requires_dist:
   - loguru
   - typer
@@ -117,7 +117,7 @@ packages:
   - pydantic-settings>=2.11.0,<3
   - uvicorn>=0.38.0,<0.39
   - starlette>=0.48.0,<0.49
-  - mcp[cli]>=1.18.0,<2
+  - mcp[cli]>=1.19.0,<2
   - pytest ; extra == 'dev'
   - ruff ; extra == 'dev'
   - python-semantic-release ; extra == 'dev'
@@ -486,10 +486,10 @@ packages:
   version: 3.0.3
   sha256: c47a551199eb8eb2121d4f0f15ae0f923d31350ab9280078d1e5f12b249e0026
   requires_python: '>=3.9'
-- pypi: https://files.pythonhosted.org/packages/1b/44/f5970e3e899803823826283a70b6003afd46f28e082544407e24575eccd3/mcp-1.18.0-py3-none-any.whl
+- pypi: https://files.pythonhosted.org/packages/ce/a3/3e71a875a08b6a830b88c40bc413bff01f1650f1efe8a054b5e90a9d4f56/mcp-1.19.0-py3-none-any.whl
   name: mcp
-  version: 1.18.0
-  sha256: 42f10c270de18e7892fdf9da259029120b1ea23964ff688248c69db9d72b1d0a
+  version: 1.19.0
+  sha256: f5907fe1c0167255f916718f376d05f09a830a215327a3ccdd5ec8a519f2e572
   requires_dist:
   - anyio>=4.5
   - httpx-sse>=0.4

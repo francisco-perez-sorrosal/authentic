@@ -81,14 +81,17 @@ def build_oauth2_server(auth_settings: SimpleAuthSettings, auth_server_settings:
         form = await request.form()
         token = form.get("token")
         if not token or not isinstance(token, str):
+            logger.info(f"Invalid token: {token}, type: {type(token)}")
             return JSONResponse({"active": False}, status_code=400)
 
         # Look up token in provider
         access_token = await oauth_provider.load_access_token(token)
         if not access_token:
+            logger.info(f"Invalid token in provider: {token}, access token: {access_token}, type: {type(access_token)}")
             return JSONResponse({"active": False})
 
-        return JSONResponse(
+        logger.info(f"Introspecting token: {token}: {access_token}")
+        new_response = JSONResponse(
             {
                 "active": True,
                 "client_id": access_token.client_id,
@@ -99,6 +102,8 @@ def build_oauth2_server(auth_settings: SimpleAuthSettings, auth_server_settings:
                 "aud": access_token.resource,  # RFC 8707 audience claim
             }
         )
+        logger.info(f"New response: {new_response}")
+        return new_response
 
     routes.append(
         Route(

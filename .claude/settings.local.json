@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pixi run python:*)",
+      "Bash(pixi list:*)",
+      "Bash(pixi run start:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

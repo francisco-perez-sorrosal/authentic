@@ -1,8 +1,8 @@
 """Main module for the authentic application."""
 
 import asyncio
-import logging
 import os
+import sys
 
 import typer
 from rich.console import Console
@@ -10,7 +10,7 @@ from rich.panel import Panel
 
 from authentic.oauth_server import build_oauth2_server
 from authentic.config.auth import AuthServerSettings, SimpleAuthSettings
-from authentic.logger import configure_logger
+from authentic.logger import configure_logger, logger
 from uvicorn import Config, Server
 
 # https://dev.to/composiodev/mcp-oauth-21-a-complete-guide-3g91
@@ -35,13 +35,17 @@ def main(
 ) -> None:
     auth_server_settings = AuthServerSettings(debug=debug)
     auth_settings = SimpleAuthSettings()
+    
+    if debug:
+        auth_server_settings.log_level = "DEBUG"
 
-    # Configure logger
+    # Configure logger with settings (overrides default configuration)
     configure_logger(auth_server_settings.log_level)
 
+    logger.debug(f"Log level: {auth_server_settings.log_level}")
     # Display welcome message
     welcome_text = f"""🚀 Welcome to {auth_server_settings.name}!
-    Python version: {os.sys.version}
+    Python version: {sys.version}
     Working directory: {os.getcwd()}
     Server/App Settings: {auth_server_settings}
     Auth Settings: {auth_settings}

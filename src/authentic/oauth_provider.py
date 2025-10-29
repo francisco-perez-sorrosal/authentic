@@ -252,6 +252,7 @@ class SimpleOAuthProvider(OAuthAuthorizationServerProvider[AuthorizationCode, Re
                 del self.pending_consent[consent_token]                
                 # Continue with authorization code flow
                 redirect_uri = await self.handle_simple_callback(username, "", state, skip_auth=True)
+                logger.warning(f"redirecting to: {redirect_uri}")
                 return RedirectResponse(url=redirect_uri, status_code=302)
             case _:
                 raise HTTPException(400, "Invalid action")
@@ -338,16 +339,22 @@ class SimpleOAuthProvider(OAuthAuthorizationServerProvider[AuthorizationCode, Re
         # Delete authorization code
         del self.auth_codes[authorization_code.code]
 
-        return OAuthToken(
+
+        logger.info(f"Exchanging authorization code: {authorization_code.code} for token: {mcp_token}")
+        
+        new_token = OAuthToken(
             access_token=mcp_token,
             token_type="Bearer",
             expires_in=ONE_HOUR,
             scope=" ".join(authorization_code.scopes),
         )
-        
+        logger.info(f"New token: {new_token}")
+        return new_token
+    
     async def load_access_token(self, token: str) -> AccessToken | None:
         """Load and validate an access token."""
         access_token = self.tokens.get(token)
+        logger.info(f"Loading access token: {token}: {access_token}")
         if not access_token:
             return None
 
